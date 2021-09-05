@@ -1,7 +1,8 @@
 " -------------------------------------------------------------------------------------------------------------------------------------------------
 "
 "        Author: wuseman <wuseman@nr1.nu>
-"
+"    
+"        Edited:
 "      FileName: vimrc
 "   Description: my personal configuration file for vim: 
 "       License: Copyright (c) 2021, wuseman
@@ -45,8 +46,36 @@ let g:mapleader = ","
 " -------------------------------------------------------------------------------------------------------------------------------------------------
 let os = substitute(system('uname'), "\n", "", "")
 
+ 
+" - GNU/Linux Manuals -----------------------------------------------------------------------------------------------------------------------------
+"
+"    Set editor / viewer and colors gnu manuals in vim
+"
+" -------------------------------------------------------------------------------------------------------------------------------------------------
+syn match manSectionHeading "^\s\+[0-9]\+\.[0-9.]*\s\+[A-Z].*$" contains=manSectionNumber
+syn match manSectionNumber "^\s\+[0-9]\+\.[0-9]*" contained
+syn region manDQString start='[^a-zA-Z"]"[^", )]'lc=1 end='"' contains=manSQString
+syn region manSQString start="[ \t]'[^', )]"lc=1 end="'"
+syn region manSQString start="^'[^', )]"lc=1 end="'"
+syn region manBQString start="[^a-zA-Z`]`[^`, )]"lc=1 end="[`']"
+syn region manBQSQString start="``[^),']" end="''"
+syn match manBulletZone transparent "^\s\+o\s" contains=manBullet
+syn case match
+syn keyword manBullet contained o
+syn match manBullet contained "\[+*]"
+syn match manSubSectionStart "^\*" skipwhite nextgroup=manSubSection
+syn match manSubSection ".*$" contained
 
-                                                   
+hi link manSectionNumber Number
+hi link manDQString String
+hi link manSQString String
+hi link manBQString String
+hi link manBQSQString String
+hi link manBullet Special
+hi manSubSectionStart term=NONE cterm=NONE gui=NONE ctermfg=black ctermbg=black guifg=navyblue guibg=navyblue
+hi manSubSection term=underline cterm=underline gui=underline ctermfg=green guifg=green
+
+set ts=8                                                   
 
 " - Folders ----------------------------------------------------------------------------------------------------------------------------------------
 "
@@ -75,7 +104,7 @@ set nocompatible
 "    Place themes in: $HOME/.vim/colors
 "
 " -------------------------------------------------------------------------------------------------------------------------------------------------
-colorscheme w    
+colorscheme w   
 
 
                                                    
@@ -205,7 +234,7 @@ augroup END
 "
 " - --------------------------------------------------------------------------------------------------------------------------------------------------
 au BufNewFile *.sh 0r ~/.vim/headers/bash_header.sh
-autocmd bufnewfile *.sh exe "1," . 6 . "g/FileName :.*/s//FileName : " .expand("%")
+autocmd bufnewfile *.sh exe "1," . 6 . "g/FileName:.*/s//FileName: " .expand("%")
 autocmd bufnewfile *.sh exe "1," . 9 . "g/Created:.*/s//Created: " .strftime("%Y-%m-%d (%H:%M:%S)")
 autocmd Bufwritepre,filewritepre *.sh exe "1," . 10 . "g/Modified:.*/s/Modified:.*/Modified: " .strftime("%Y-%m-%d (%H:%M:%S)")
 autocmd Bufwritepre,filewritepre *.sh exe "1," . 43 . "g/###########################################################################"
@@ -227,12 +256,28 @@ nnoremap ^BF i<ESC>o<ESC>ofunction editme() {<ESC>o<ESC>o}<ESC>ki<S-TAB>        
 
 " - Mappings  ------------------------------------------------------------------------------------------------------------------------------------------
 "
+"    map is the "root" of all recursive mapping commands. The root form applies to "normal", "visual+select", and "operator-pending" modes.
+"    noremap is the "root" of all non-recursive mapping commands. The root form applies to the same modes as map. (Think of the nore prefix to mean "non-recursive".)
+"
+"    (Note that there are also the ! modes like map! that apply to insert & command-line.)
+"
 "    We keep it clean and simple with minimal descriptions for help
+"
+"       n: normal only
+"       v: visual and select
+"       o: operator-pending
+"       x: visual only
+"       s: select only
+"       i: insert
+"       c: command-line
+"       l: insert, command-line, regexp-search (and others. Collectively called "Lang-Arg" pseudo-mode)
+"
+"
 "
 " - -----------------------------------------------------------------------------------------------------------------------------------------------------
 nnoremap - $                                                                                                                        " Home & End should be placed next to each other
-nnoremap <C-Left> :tabprevious<CR>                                                                                                  " Show previous tab               
-nnoremap <C-Right> :tabnext<CR>                                                                                                     " Show next tab
+nnoremap <S-j> :tabprevious<CR>                                                                                                  " Show previous tab               
+nnoremap <S-n>j :tabnext<CR>                                                                                                     " Show next tab
 nnoremap <leader>n :set number!<CR>                                                                                                 " Hit ,n for toggle showing numbers
 nnoremap B ^                                                                                                                        " Move to begin of line
 nnoremap E $                                                                                                                        " Move to end of line
@@ -250,10 +295,15 @@ nnoremap <leader>v <c-w>v<c-w>l                                                 
 nnoremap <leader>x <c-w>c                                                                                                           " Close a split via ,c
 nnoremap w!! w !sudo tee % >/dev/null                                                                                               " Saves the file (handling the permission-denied error)
 nnoremap gX :silent :execute "!xdg-open" expand('%:p:h') . "/" . expand("<cfile>") " &"<cr>                                         " Open current default browser
+noremap 0 g0
+noremap $ A 
 
+" Paste yanked line without line breaks before/after cursor position
+nnoremap gP i<CR><Esc>PkJxJx
+nnoremap gp a<CR><Esc>PkJxJx
 
-
-                                                   
+                                                   " Delete current line without yanking the line breaks 
+nnoremap dil ^d$
 
 " -  Copy / Paste / Cut ---------------------------------------------------------------------------------------------------------------------------------
 "
@@ -262,7 +312,10 @@ nnoremap gX :silent :execute "!xdg-open" expand('%:p:h') . "/" . expand("<cfile>
 " - -----------------------------------------------------------------------------------------------------------------------------------------------------
 set clipboard=unnamed                                                                                                               " For set paste method
 map <leader>P "+y                                                                                                                   " Use ,P for copy to linux clipboard, this require vim-gtk3
-
+map [[ ?{<CR>w99[{
+map ][ /}<CR>b99]}
+map ]] j0[[%/{<CR>
+map [] k$][%?}<CR>
 
 
                                                    
