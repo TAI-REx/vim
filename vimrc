@@ -1,16 +1,19 @@
 " -------------------------------------------------------------------------------------------------------------------------------------------------
+"    __      ___   _ ___  ___ _ __ ___   __ _ _ __
+"    \ \ /\ / / | | / __|/ _ \ '_ ` _ \ / _` | '_ \
+"     \ V  V /| |_| \__ \  __/ | | | | | (_| | | | |
+"      \_/\_/  \__,_|___/\___|_| |_| |_|\__,_|_| |_|
+"
 "
 "        Author: wuseman <wuseman@nr1.nu>
 "    
-"        Edited:
 "      FileName: vimrc
+"      Modified: 2021-09-10 (02:31:59)
+"
 "   Description: my personal configuration file for vim: 
 "       License: Copyright (c) 2021, wuseman
 "
 " -------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-                                   
 
 " - For newbies  ----------------------------------------------------------------------------------------------------------------------------------
 "
@@ -24,7 +27,6 @@
 " nnoremap <Right> :echoe "Use l"<CR>
 " nnoremap <Up>    :echoe "Use k"<CR>
 " nnoremap <Down>  :echoe "Use j"<CR>
-
 
                                                    
 
@@ -104,7 +106,7 @@ set nocompatible
 "    Place themes in: $HOME/.vim/colors
 "
 " -------------------------------------------------------------------------------------------------------------------------------------------------
-colorscheme w   
+colorscheme wuseman 
 
 
                                                    
@@ -233,26 +235,40 @@ augroup END
 "    *.sh – consider all files with .sh extension.
 "
 " - --------------------------------------------------------------------------------------------------------------------------------------------------
+"
+" Bash Header (.*sh)
+"
 au BufNewFile *.sh 0r ~/.vim/headers/bash_header.sh
 autocmd bufnewfile *.sh exe "1," . 6 . "g/FileName:.*/s//FileName: " .expand("%")
 autocmd bufnewfile *.sh exe "1," . 9 . "g/Created:.*/s//Created: " .strftime("%Y-%m-%d (%H:%M:%S)")
 autocmd Bufwritepre,filewritepre *.sh exe "1," . 10 . "g/Modified:.*/s/Modified:.*/Modified: " .strftime("%Y-%m-%d (%H:%M:%S)")
-autocmd Bufwritepre,filewritepre *.sh exe "1," . 43 . "g/###########################################################################"
-                                                 
+"
+" vimrc configuration (vimrc)
+"
+autocmd Bufwritepre,filewritepre vimrc exe "1," . 11 . "g/Modified:.*/s/Modified:.*/Modified: " .strftime("%Y-%m-%d (%H:%M:%S)")
+autocmd Bufwritepre,filewritepre *vimrc exe "1," . 11 . "g/Modified:.*/s/Modified:.*/Modified: " .strftime("%Y-%m-%d (%H:%M:%S)")
+"
+" Configuration files (.conf)
+"
+au BufNewFile *.conf 0r ~/.vim/headers/config_headers.txt
+autocmd bufnewfile *.conf exe "1," . 4 . "g/FileName:.*/s//FileName: " .expand("%")
+autocmd bufnewfile *.conf exe "1," . 6 . "g/Created:.*/s//Created: " .strftime("%Y-%m-%d (%H:%M:%S)")
+autocmd Bufwritepre,filewritepre *.conf exe "1," . 7 . "g/Modified:.*/s/Modified:.*/Modified: " .strftime("%Y-%m-%d (%H:%M:%S)")
 
-
-                                                   
+ 
+                                                
 
 " - Mappings for Bash scripting ---------------------------------------------------------------------------------------------------------------------
 "
 "    IN this section we store various mappings for make our life easier when we working with shell scripts
 "
 " - --------------------------------------------------------------------------------------------------------------------------------------------------
-nnoremap ^BF i<ESC>o<ESC>ofunction editme() {<ESC>o<ESC>o}<ESC>ki<S-TAB>                                                            " Insert a Function 
-
-
-
-                                                   
+nnoremap <leader>bf i<ESC>o<ESC>ofunction editme() {<ESC>o<ESC>o}<ESC>ki<S-TAB>                                                            " Insert a Function 
+nnoremap <leader>bg :r /home/wuseman/.vim/bash-templates/getopts.sh<CR>                                                             " Insert getopts example
+nnoremap <leader>bu :r /home/wuseman/.vim/bash-templates/usage.sh<CR>                                                             " Insert getopts exampleS
+nnoremap <leader>bs :r /home/wuseman/.vim/bash-templates/settings.sh<CR>                                                             " Insert getopts exampleS
+nnoremap <leader>bi :r /home/wuseman/.vim/bash-templates/if.sh<CR>                                                             " Insert getopts exampleS
+nnoremap <leader>bgl :r /home/wuseman/.vim/bash-templates/getopts-long.sh<CR>                                                             " Insert getopts exampleS
 
 " - Mappings  ------------------------------------------------------------------------------------------------------------------------------------------
 "
@@ -263,15 +279,13 @@ nnoremap ^BF i<ESC>o<ESC>ofunction editme() {<ESC>o<ESC>o}<ESC>ki<S-TAB>        
 "
 "    We keep it clean and simple with minimal descriptions for help
 "
-"       n: normal only
-"       v: visual and select
-"       o: operator-pending
-"       x: visual only
-"       s: select only
-"       i: insert
-"       c: command-line
-"       l: insert, command-line, regexp-search (and others. Collectively called "Lang-Arg" pseudo-mode)
-"
+" :nmap - Display normal mode maps
+" :imap - Display insert mode maps
+" :vmap - Display visual and select mode maps
+" :smap - Display select mode maps
+" :xmap - Display visual mode maps
+" :cmap - Display command-line mode maps
+" :omap - Display operator pending mode maps"
 "
 "
 " - -----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -302,7 +316,7 @@ noremap $ A
 nnoremap gP i<CR><Esc>PkJxJx
 nnoremap gp a<CR><Esc>PkJxJx
 
-                                                   " Delete current line without yanking the line breaks 
+                                                " Delete current line without yanking the line breaks 
 nnoremap dil ^d$
 
 " -  Copy / Paste / Cut ---------------------------------------------------------------------------------------------------------------------------------
@@ -318,18 +332,21 @@ map ]] j0[[%/{<CR>
 map [] k$][%?}<CR>
 
 
-                                                   
+                                                
 
 " - Mappings for bash scripting ----------------------------------------------------------------------------------------------------------------------
 "
 "    For make our life easier in cli
 "
 " - --------------------------------------------------------------------------------------------------------------------------------------------------
-nnoremap ^BF i<ESC>o<ESC>ofunction editme() {<ESC>o<ESC>o}<ESC>ki<S-TAB>                                                            " Insert a function example   
+nnoremap <leader>bf i<ESC>o<ESC>ofunction editme() {<ESC>o<ESC>o}<ESC>ki<S-TAB>                                                            " Insert a function example   
+nnoremap <leader>bg :r /home/wuseman/.vim/bash-templates/getopts.sh<CR>
+nnoremap <leader>bu :r /home/wuseman/.vim/bash-templates/usage.sh<CR>
+nnoremap <leader>bs :r /home/wuseman/.vim/bash-templates/settings.sh<CR>
+nnoremap <leader>bi :r /home/wuseman/.vim/bash-templates/if.sh<CR> 
 
 
-
-                                                   
+                                                
 
 " - Autocmd ------------------------------------------------------------------------------------------------------------------------------------
 "
@@ -342,7 +359,7 @@ nnoremap ^BF i<ESC>o<ESC>ofunction editme() {<ESC>o<ESC>o}<ESC>ki<S-TAB>        
 
 
 
-                                                   
+                                                
 
 " - Date  -----------------------------------------------------------------------------------------------------------------------------------------------
 "
@@ -371,7 +388,7 @@ nnoremap <leader>D "=strftime("%d/%m/%y %H:%M:%S")<CR>P
 
 
 
-                                                   
+                                                
 
 " - Autocommands ----------------------------------------------------------------------------------------------------------------------------------------
 "
@@ -382,7 +399,7 @@ au BufAdd,BufNewFile * nested tab sball                                         
 
 
 
-                                                   
+                                                
 
 
 " - Entering file ----------------------------------------------------------------------------------------------------------------------------------------
@@ -391,13 +408,13 @@ au BufAdd,BufNewFile * nested tab sball                                         
 "
 " - -----------------------------------------------------------------------------------------------------------------------------------------------------
 if has("autocmd")
-  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe "normal! g'\"" | endif
+au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+\| exe "normal! g'\"" | endif
 endif
 
 
 
-                                                   
+                                                
 
 " - Good urls -------------------------------------------------------------------------------------------------------------------------------------------
 "
@@ -415,4 +432,4 @@ endif
 " https://www.artificialworlds.net/presentations/vim-for-fun/vim-for-fun.html
 
 
-" - The End  ---------------------------------------------------------------------------------------------------------------------------------------------
+

@@ -7,7 +7,7 @@
 #       Version: 1.0
 #
 #       Created:
-#      Modified: 2021-08-23 (21:49:56)
+#      Modified: 2021-09-10 (01:51:09)
 #
 #           iRC: wuseman (Libera/EFnet/LinkNet) 
 #       Website: https://www.nr1.nu/
@@ -38,8 +38,8 @@
 #      If you delete this exception statement from all source files in the  
 #      program, then also delete it here.                                   
 #
-#     You should have received a copy of the GNU General Public License
-#     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#      You should have received a copy of the GNU General Public License
+#      along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # - End of Header -------------------------------------------------------------
 

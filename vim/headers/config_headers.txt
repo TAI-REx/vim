@@ -1,0 +1,18 @@
+# - iNFO -----------------------------------------------------------------------------
+#
+#        Author: wuseman <wuseman@nr1.nu>
+#      FileName:  
+#
+#       Created:
+#      Modified: 
+#
+#           iRC: wuseman (Libera/EFnet/LinkNet) 
+#       Website: https://www.nr1.nu/
+#        GitHub: https://github.com/wuseman/
+#
+# - Descrpiption --------------------------------------------------------------------
+#
+#      No description has been added
+#
+# - End of Header -------------------------------------------------------------
+
