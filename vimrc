@@ -8,9 +8,10 @@
 "        Author: wuseman <wuseman@nr1.nu>
 "    
 "      FileName: vimrc
-"      Modified: 2021-09-10 (02:31:59)
+"      Modified: 2021-09-10 (15:39:56)
 "
 "   Description: my personal configuration file for vim: 
+"
 "       License: Copyright (c) 2021, wuseman
 "
 " -------------------------------------------------------------------------------------------------------------------------------------------------
@@ -149,7 +150,7 @@ set swapfile																												" Use swap files
 set tabstop=4                                                                                                               " The width of a TAB is set to 4. 
 set ttyfast                                                                                                                 " Speed up scrolling in Vim
 set wildmenu                                                                                                                " Visual autocomplete for command menu
-
+set formatoptions+=j                                                                                                        " Delete comment characters when joining lines.
 
                                                    
 " - Statusline -----------------------------------------------------------------------------------------------------------------------------------------
@@ -159,6 +160,7 @@ set wildmenu                                                                    
 " - --------------------------------------------------------------------------------------------------------------------------------------------------
 "
 "  					 To be re-added
+set statusline=%F%m%r%h%w%=\ [%Y]\ [%{&ff}]\ [%04l,%04v]\ [%p%%]\ [%L]
 "
 
 
@@ -313,7 +315,7 @@ noremap 0 g0
 noremap $ A 
 
 " Paste yanked line without line breaks before/after cursor position
-nnoremap gP i<CR><Esc>PkJxJx
+nnoremap gp i<CR><Esc>PkJxJx
 nnoremap gp a<CR><Esc>PkJxJx
 
                                                 " Delete current line without yanking the line breaks 
@@ -430,6 +432,69 @@ endif
 " https://alapono.eng.hawaii.edu//Tutor/vi.html
 " http://www.yolinux.com/TUTORIALS/LinuxTutorialAdvanced_vi.ht22/08/21 20:06:15m
 " https://www.artificialworlds.net/presentations/vim-for-fun/vim-for-fun.html
+
+" Change line below cursor and pres ... for edit 
+nnoremap <Leader>q *``cgn
+nnoremap <Leader>Q #``cgN
+
+
+" Cursor only active in current window
+augroup Cursoractive
+    au!
+    autocmd VimEnter, WinEnter, BufWinEnter * set local cursorline
+    autocmd WinLeave * setlocal nocursorline
+augroup END
+
+
+" Select word and replace all words
+nnoremap <Leader>rs :%s/\<<C-r><C-w>\>//g<Left><Left>
+nnoremap <expr> <leader>rw ':<c-u>%s/\<' . expand('<cword>') . '\>//g<left><left>'
+nnoremap <expr> <leader>rr ':<c-u>%s///g<left><left>'
+
+
+
+" - Explorer / Netrw -------------------------------------------------------------------------------------------------------------------------------------
+"
+" http://www.drchip.org/astronaut/vim/index.html#NETRW
+" https://thefrugalcomputerguy.com/linux/grouppg.php?ser=10002&grp=10
+"
+" - -----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"Map F5 to toggle on and off the line numbers in Normal mode
+nmap <F5> gh
+
+" These next 2 lines will hide the dot files on startup
+let ghregex='\(^\|\s\s\)\zs\.\S\+'    
+let g:netrw_list_hide=ghregex        
+
+"Map F6 to toggle on and off the banner
+nmap <F6> I
+
+"#Turn off the banner at the top of the sreen on startup
+let g:netrw_banner=0    
+
+"# to change the way netrw shows the files and directorys
+"let g:netrw_liststyle= 0    " Default view (directory name/file name)
+"let g:netrw_liststyle= 1    " Show time and size
+"let g:netrw_liststyle= 2    " Shows listing in 2 columns
+let g:netrw_liststyle= 3    " show the tree listing
+
+
+"# Set the split windows to always be equal and open splits to the right
+let g:netrw_winsize = 0         "   set default window size to be always equal
+let g:netrw_preview = 1		    "	 open splits to the right
+
+
+
+let g:netrw_altv          = 1
+let g:netrw_fastbrowse    = 2
+let g:netrw_keepdir       = 0
+let g:netrw_liststyle     = 2
+let g:netrw_retmap        = 1
+let g:netrw_silent        = 1
+let g:netrw_special_syntax= 1
+
+noremap <C-c> :cs find c <C-R>=expand("<cword>")<CR><CR>
 
 
 

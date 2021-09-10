@@ -84,7 +84,9 @@ hi String guifg=#ffffff guibg=#000000 guisp=#000000 gui=NONE ctermfg=15 ctermbg=
 hi Visual ctermbg=blue 
 
 " Splits
-hi VertSplit ctermbg=3 cterm=NONE 
+hi vertsplit ctermbg=3 cterm=none 
+hi split ctermbg=3 cterm=none 
+  
 
 " This is for getopts for example "-v -x -h" and so on < >  if, then, else, endif, switch, etc.
 hi Conditional ctermfg=15 
