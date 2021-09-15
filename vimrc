@@ -8,7 +8,7 @@
 "        Author: wuseman <wuseman@nr1.nu>
 "    
 "      FileName: vimrc
-"      Modified: 2021-09-10 (15:39:56)
+"      Modified: 2021-09-16 (00:22:39)
 "
 "   Description: my personal configuration file for vim: 
 "
@@ -42,7 +42,7 @@ let g:mapleader = ","
 
                                                    
 
-" - System stuff _---------------------------------------------------------------------------------------------------------------------------------
+" - System stuff _--------------------------------------------------------------------------------------------------------------------------------- 
 "
 "    For system())
 "
@@ -150,19 +150,17 @@ set swapfile																												" Use swap files
 set tabstop=4                                                                                                               " The width of a TAB is set to 4. 
 set ttyfast                                                                                                                 " Speed up scrolling in Vim
 set wildmenu                                                                                                                " Visual autocomplete for command menu
+set wildmode=list:longest                                                                                                   " Show :e <tab> above eacherother
 set formatoptions+=j                                                                                                        " Delete comment characters when joining lines.
+set mousehide                                                                                                               " Hide mouse when typing
+set ruler
 
-                                                   
 " - Statusline -----------------------------------------------------------------------------------------------------------------------------------------
 "
 "     For statusline
 "
 " - --------------------------------------------------------------------------------------------------------------------------------------------------
-"
-"  					 To be re-added
-set statusline=%F%m%r%h%w%=\ [%Y]\ [%{&ff}]\ [%04l,%04v]\ [%p%%]\ [%L]
-"
-
+set statusline=%F%m%r%h%w%=\ [%Y]\ [%{&ff}]\ [%04l,%04v]\ [%p%%]\ [%L]\ [Percent:\ %p%%]\ [col:\ %c\]
 
                                                    
 " - List NFO(.nfo) extensions properly  -----------------------------------------------------------------------------------------------------------------
@@ -292,11 +290,7 @@ nnoremap <leader>bgl :r /home/wuseman/.vim/bash-templates/getopts-long.sh<CR>   
 "
 " - -----------------------------------------------------------------------------------------------------------------------------------------------------
 nnoremap - $                                                                                                                        " Home & End should be placed next to each other
-nnoremap <S-j> :tabprevious<CR>                                                                                                  " Show previous tab               
-nnoremap <S-n>j :tabnext<CR>                                                                                                     " Show next tab
 nnoremap <leader>n :set number!<CR>                                                                                                 " Hit ,n for toggle showing numbers
-nnoremap B ^                                                                                                                        " Move to begin of line
-nnoremap E $                                                                                                                        " Move to end of line
 nnoremap Q :q!<CR>                                                                                                                  " Quickly quit editting without save
 nnoremap RA :%s///g<left><left>                                                                                                     " Replace all matches
 nnoremap RO :s///g<left><left>                                                                                                      " Replace the current search
@@ -313,6 +307,27 @@ nnoremap w!! w !sudo tee % >/dev/null                                           
 nnoremap gX :silent :execute "!xdg-open" expand('%:p:h') . "/" . expand("<cfile>") " &"<cr>                                         " Open current default browser
 noremap 0 g0
 noremap $ A 
+nnoremap <C-j> :tabprevious<CR>
+nnoremap <C-k> :tabnext<CR>
+
+" Send current buffer the default printer with -p.
+nnoremap <leader>p :hardcopy<CR>
+
+" Easy bracket creation.
+inoremap <leader>' ''<esc>i
+inoremap <leader>" ""<esc>i
+inoremap <leader>( ()<esc>i
+inoremap <leader>[ []<esc>i
+inoremap <leader>{ {}<esc>i
+
+" Pressing the letter o will open a new line below the current one.
+" Exit insert mode after creating a new line above or below the current line.
+nnoremap o o<esc>
+nnoremap O O<esc>
+
+" Center the cursor vertically when moving to the next word during a search.
+nnoremap n nzz
+nnoremap N Nzz
 
 " Paste yanked line without line breaks before/after cursor position
 nnoremap gp i<CR><Esc>PkJxJx
@@ -320,6 +335,14 @@ nnoremap gp a<CR><Esc>PkJxJx
 
                                                 " Delete current line without yanking the line breaks 
 nnoremap dil ^d$
+
+
+" Resize split windows using arrow keys by pressing:
+" CTRL+UP, CTRL+DOWN, CTRL+LEFT, or CTRL+RIGHT.
+noremap <c-up> <c-w>+
+noremap <c-down> <c-w>-
+noremap <c-left> <c-w>>
+noremap <c-right> <c-w><
 
 " -  Copy / Paste / Cut ---------------------------------------------------------------------------------------------------------------------------------
 "
@@ -355,10 +378,9 @@ nnoremap <leader>bi :r /home/wuseman/.vim/bash-templates/if.sh<CR>
 "    Uncomment the following to have Vim load indentation rules and plugins according to the detected filetype.
 "
 " - ----------------------------------------------------------------------------------------------------------------------------------------------------- 
-"if has("autocmd")
-"  filetype plugin indent on
-"endif
-
+filetype indent on
+set smartindent
+autocmd BufRead,BufWritePre *.sh normal gg=G
 
 
                                                 
@@ -493,8 +515,5 @@ let g:netrw_liststyle     = 2
 let g:netrw_retmap        = 1
 let g:netrw_silent        = 1
 let g:netrw_special_syntax= 1
-
-noremap <C-c> :cs find c <C-R>=expand("<cword>")<CR><CR>
-
 
 
