@@ -8,7 +8,7 @@
 "        Author: wuseman <wuseman@nr1.nu>
 "    
 "      FileName: vimrc
-"      Modified: 2021-09-16 (00:22:39)
+"      Modified: 2021-09-21 (06:23:06)
 "
 "   Description: my personal configuration file for vim: 
 "
@@ -107,7 +107,7 @@ set nocompatible
 "    Place themes in: $HOME/.vim/colors
 "
 " -------------------------------------------------------------------------------------------------------------------------------------------------
-colorscheme wuseman 
+colorscheme wuseman.mixed
 
 
                                                    
@@ -334,15 +334,7 @@ nnoremap gp i<CR><Esc>PkJxJx
 nnoremap gp a<CR><Esc>PkJxJx
 
                                                 " Delete current line without yanking the line breaks 
-nnoremap dil ^d$
-
-
-" Resize split windows using arrow keys by pressing:
-" CTRL+UP, CTRL+DOWN, CTRL+LEFT, or CTRL+RIGHT.
-noremap <c-up> <c-w>+
-noremap <c-down> <c-w>-
-noremap <c-left> <c-w>>
-noremap <c-right> <c-w><
+nnoremap dil d$
 
 " -  Copy / Paste / Cut ---------------------------------------------------------------------------------------------------------------------------------
 "
@@ -422,10 +414,6 @@ nnoremap <leader>D "=strftime("%d/%m/%y %H:%M:%S")<CR>P
 au BufAdd,BufNewFile * nested tab sball                                                                          " Open new files in a new statusline
 
 
-
-                                                
-
-
 " - Entering file ----------------------------------------------------------------------------------------------------------------------------------------
 "
 "    Reopen file at same line you quit, uncomment for get at line nr1 begin at top
@@ -436,24 +424,6 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 \| exe "normal! g'\"" | endif
 endif
 
-
-
-                                                
-
-" - Good urls -------------------------------------------------------------------------------------------------------------------------------------------
-"
-"   Useful sites for get deeper into vim
-"
-" - -----------------------------------------------------------------------------------------------------------------------------------------------------
-" https://github.com/WolfgangMehner/bash-support/tree/master/bash-support/codesnippets
-" https://vim.fandom.com/wiki/Best_Vim_Tips#Get_output_from_shell_commands
-" http://zzapper.co.uk/vimtips.html
-" https://gist.github.com/mitry/813151
-" https://unix.stackexchange.com/questions/523090/vim-autostart-with-vexplore-and-terminal
-" https://gist.github.com/stardiviner/3891591
-" https://alapono.eng.hawaii.edu//Tutor/vi.html
-" http://www.yolinux.com/TUTORIALS/LinuxTutorialAdvanced_vi.ht22/08/21 20:06:15m
-" https://www.artificialworlds.net/presentations/vim-for-fun/vim-for-fun.html
 
 " Change line below cursor and pres ... for edit 
 nnoremap <Leader>q *``cgn
@@ -517,3 +487,23 @@ let g:netrw_silent        = 1
 let g:netrw_special_syntax= 1
 
 
+" - Good urls -------------------------------------------------------------------------------------------------------------------------------------------
+"
+"   Useful sites for get deeper into vim
+"
+" - -----------------------------------------------------------------------------------------------------------------------------------------------------
+" https://github.com/WolfgangMehner/bash-support/tree/master/bash-support/codesnippets
+" https://vim.fandom.com/wiki/Best_Vim_Tips#Get_output_from_shell_commands
+" http://zzapper.co.uk/vimtips.html
+" https://gist.github.com/mitry/813151
+" https://unix.stackexchange.com/questions/523090/vim-autostart-with-vexplore-and-terminal
+" https://gist.github.com/stardiviner/3891591
+" https://alapono.eng.hawaii.edu//Tutor/vi.html
+" http://www.yolinux.com/TUTORIALS/LinuxTutorialAdvanced_vi.ht22/08/21 20:06:15m
+" https://www.artificialworlds.net/presentations/vim-for-fun/vim-for-fun.html
+
+
+" Quickly edit/reload this configuration file
+
+nnoremap gev :e $MYVIMRC<CR>
+nnoremap gsv :so $MYVIMRC<CR>

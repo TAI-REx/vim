@@ -4,7 +4,14 @@ My vim setup, nothing fancy really
 
 ## Colorsheme
 
-![Screenshot](https://i.imgur.com/t16dDw4.png)
+#### wuseman
+![Screenshot](.previews/wuseman.png)
+
+#### wuseman.mixed
+![Screenshot](.previews/wuseman.mixed.png)
+
+#### w.vim
+![Screenshot](.previws/w.png)
 
 ## Getting Started:
 

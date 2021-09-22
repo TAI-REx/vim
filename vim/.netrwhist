@@ -1,0 +1,5 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =3
+let g:netrw_dirhist_3='/home/wuseman/backups/vim/vim/colors'
+let g:netrw_dirhist_2='/etc/syslog-ng'
+let g:netrw_dirhist_1='/etc/portage/package.use'
