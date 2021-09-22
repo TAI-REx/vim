@@ -11,7 +11,8 @@ My vim setup, nothing fancy really
 ![Screenshot](.previews/wuseman.mixed.png)
 
 #### w.vim
-![Screenshot](.previws/w.png)
+![Screenshot](.previews/w.png)
+
 
 ## Getting Started:
 
